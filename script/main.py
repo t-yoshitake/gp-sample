@@ -143,22 +143,22 @@ if __name__ == "__main__":
     fig.savefig('result1.png')
 
     # ガウスカーネル-2次元入力
-    x = np.linspace(0, 10, 50, endpoint=False)
-    y = np.linspace(0, 10, 50, endpoint=False)
+    x = np.linspace(0, 10, 100, endpoint=False)
+    y = np.linspace(0, 10, 100, endpoint=False)
     xx, yy = np.meshgrid(x, y)
     shape_input = xx.shape
     xy = np.c_[xx.reshape(-1), yy.reshape(-1)] # 2次元ベクトルの入力
     kparam = np.array([.50])
     z = gp_sampling(xy, 1.0, np.zeros(len(xy)), gaussian_kernel, kparam).reshape(shape_input)
     
-    with open('results.pickle', 'wb') as fout:
-        results = {'xx': xx, 'yy': yy, 'z': z}
-        pickle.dump(results, fout)
-    
     fig = plt.figure()
     ax = Axes3D(fig)
-    surf = ax.plot_surface(xx, yy, z, cmap='gnuplot', linewidth=0)
-    plt.colorbar(surf)
-    plt.show()
+    surf = ax.plot_surface(xx, yy, z, cmap='CMRmap', linewidth=0)
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.set_zlabel('z')
+    ax.set_title('Gaussian Kernel')
+    fig.tight_layout()
+    fig.savefig('result2.png')
 
     
